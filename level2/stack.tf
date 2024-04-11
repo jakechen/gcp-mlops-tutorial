@@ -15,19 +15,57 @@
 
 # Orchestrate the above steps
 
+locals {
+  project = "simple-pipeline-415719"
+}
+
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "4.51.0"
     }
   }
 }
 
 provider "google" {
-  project = "<PROJECT_ID>"
+  project = local.project
 }
 
-resource "google_compute_network" "vpc_network" {
-  name = "terraform-network"
+# Create project bucket
+resource "google_storage_bucket" "bucket" {
+  name     = "${local.project}-bucket"
+  location = "US"
+  uniform_bucket_level_access = true
+}
+
+# Zip up test code
+data "archive_file" "test" {
+  type        = "zip"
+  source_dir  = "test_function"
+  output_path = "temp/test.zip"
+}
+
+# Push test code to bucket
+resource "google_storage_bucket_object" "object" {
+  name   = "temp/test.zip"
+  bucket = google_storage_bucket.bucket.name
+  source = "test.zip"
+}
+
+resource "google_cloudfunctions2_function" "function" {
+  name = "test"
+  location = "us-west1"
+  description = "test function"
+
+  build_config {
+    runtime = "python310"
+    entry_point = "main"  # Set the entry point 
+    source {
+      storage_source {
+        bucket = google_storage_bucket.bucket.name
+        object = google_storage_bucket_object.object.name
+      }
+    }
+  }
 }
