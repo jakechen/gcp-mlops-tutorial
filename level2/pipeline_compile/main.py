@@ -1,7 +1,7 @@
 from kfp import dsl
 from kfp import compiler
 
-def main():
+def main(request):
     # Define pipeline
     @dsl.pipeline(name="iris", pipeline_root=PIPELINE_ROOT)
     def pipeline(

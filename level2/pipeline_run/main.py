@@ -1,6 +1,6 @@
 import google.cloud.aiplatform as aip
 
-def main():
+def main(request):
     aip.init(
         project=project_id,
         location=PROJECT_REGION,
