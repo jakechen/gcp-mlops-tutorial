@@ -1,15 +1,10 @@
-# Specifies base image and tag.
+# Select base image
+# Good starting point is Vertex AI prebuilt containers:
 # https://cloud.google.com/vertex-ai/docs/training/pre-built-containers
-FROM us-docker.pkg.dev/vertex-ai/training/tf-gpu.2-14.py310:latest
+FROM us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest
 
-# Sets the container working directory.
-WORKDIR /root
+# Copy files
+COPY . .
 
-# Copies the requirements.txt into the container to reduce network calls.
-COPY requirements.txt .
-
-# Installs additional packages.
-RUN pip install -U -r requirements.txt
-
-# Invoke the trainer.
-ENTRYPOINT ["python", "task.py"]
+# Run script
+ENTRYPOINT ["python", "train.py"]
