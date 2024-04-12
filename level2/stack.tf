@@ -1,20 +1,3 @@
-# MODEL TRAINING
-# Cloud Functions? to build training image
-# 
-
-# Cloud Run to compile and training pipeline with training image
-# python define_pipeline.py
-# push .yaml to gcs
-
-# Cloud Functions to run training pipeline
-# pull .yaml from gcs
-# google.loud.aiplatform.PipelineJob().submit()
-
-# Scheduler for training pipeline
-# resource "google_cloud_scheduler_job" "job" {}
-
-# Orchestrate the above steps
-
 locals {
   project = "simple-pipeline-415719"
 }
@@ -106,17 +89,3 @@ resource "google_cloudfunctions2_function" "pipeline_run_function" {
     }
   }
 }
-
-# # Create Cloud Run job
-# resource "google_cloud_run_v2_job" "run" {
-#   name     = "cloudrun-job"
-#   location = "us-central1"
-
-#   template {
-#     template {
-#       containers {
-#         image = "us-west1-docker.pkg.dev/${local.project}/fail/train_model"
-#       }
-#     }
-#   }
-# }
