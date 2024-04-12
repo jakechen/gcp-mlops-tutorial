@@ -1,4 +1,4 @@
-import google.cloud.aiplatform as aip
+from google.cloud import aiplatform as aip
 
 def main(request):
     aip.init(

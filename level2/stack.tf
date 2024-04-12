@@ -38,9 +38,9 @@ data "archive_file" "pipeline_compile_zip" {
 }
 
 resource "google_storage_bucket_object" "pipeline_compile_obj" {
-  name   = "pipeline_compile.zip"
+  name   = data.archive_file.pipeline_compile_zip.id
   bucket = google_storage_bucket.bucket.name
-  source = "temp/pipeline_compile.zip"
+  source = data.archive_file.pipeline_compile_zip.output_path
 }
 
 resource "google_cloudfunctions2_function" "pipeline_compile_function" {
@@ -68,9 +68,9 @@ data "archive_file" "pipeline_run_zip" {
 }
 
 resource "google_storage_bucket_object" "pipeline_run_obj" {
-  name   = "pipeline_run.zip"
+  name   = data.archive_file.pipeline_run_zip.id
   bucket = google_storage_bucket.bucket.name
-  source = "temp/pipeline_run.zip"
+  source = data.archive_file.pipeline_run_zip.output_path
 }
 
 resource "google_cloudfunctions2_function" "pipeline_run_function" {
