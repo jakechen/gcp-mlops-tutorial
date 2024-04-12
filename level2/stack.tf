@@ -106,3 +106,17 @@ resource "google_cloudfunctions2_function" "pipeline_run_function" {
     }
   }
 }
+
+# # Create Cloud Run job
+# resource "google_cloud_run_v2_job" "run" {
+#   name     = "cloudrun-job"
+#   location = "us-central1"
+
+#   template {
+#     template {
+#       containers {
+#         image = "us-west1-docker.pkg.dev/${local.project}/fail/train_model"
+#       }
+#     }
+#   }
+# }

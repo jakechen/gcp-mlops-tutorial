@@ -1,20 +1,22 @@
-# Run pipeline
+import google.cloud.aiplatform as aip
+
 def main():
-    vertex_pipelines_job = vertexai.pipeline_jobs.PipelineJob(
-        display_name="iris",
-        template_path="iris.json",
-        parameter_values={
-            "project": PROJECT_ID,
-            "location": REGION,
-            "staging_bucket": GCS_BUCKET,
-            "display_name": DISPLAY_NAME,        
-            "container_uri": IMAGE_URI,
-            "model_serving_container_image_uri": SERVING_IMAGE_URI,        
-            "base_output_dir": GCS_BASE_OUTPUT_DIR},
-        enable_caching=True,
+    aip.init(
+        project=project_id,
+        location=PROJECT_REGION,
     )
 
-    vertex_pipelines_job.run()
+    # Prepare the pipeline job
+    job = aip.PipelineJob(
+        display_name="automl-image-training-v2",
+        template_path="image_classif_pipeline.yaml",
+        pipeline_root=pipeline_root_path,
+        parameter_values={
+            'project_id': project_id
+        }
+    )
+
+    job.submit()
 
 # Main entry point
 if __name__ == "__main__":

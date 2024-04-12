@@ -4,8 +4,7 @@
 FROM us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest
 
 # Copy files
-COPY requirements.txt .
-COPY train_container .
+COPY . .
 
 # Pip install
 # RUN pip install -r requirements.txt
