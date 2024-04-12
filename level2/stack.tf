@@ -23,7 +23,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "4.51.0"
+      version = "5.24.0"
     }
   }
 }
@@ -39,24 +39,31 @@ resource "google_storage_bucket" "bucket" {
   uniform_bucket_level_access = true
 }
 
-# Zip up test code
-data "archive_file" "test" {
-  type        = "zip"
-  source_dir  = "test_function"
-  output_path = "temp/test.zip"
-}
-
-# Push test code to bucket
-resource "google_storage_bucket_object" "object" {
-  name   = "temp/test.zip"
-  bucket = google_storage_bucket.bucket.name
-  source = "test.zip"
-}
-
-resource "google_cloudfunctions2_function" "function" {
-  name = "test"
+# Create Artifact Registry Repository
+resource "google_artifact_registry_repository" "repo" {
+  project = local.project
   location = "us-west1"
-  description = "test function"
+  repository_id = "test-repo"
+  format = "DOCKER"
+}
+
+# Create Cloud Function to compile pipeline
+data "archive_file" "pipeline_compile_zip" {
+  type        = "zip"
+  source_dir  = "pipeline_compile"
+  output_path = "temp/pipeline_compile.zip"
+}
+
+resource "google_storage_bucket_object" "pipeline_compile_obj" {
+  name   = "pipeline_compile.zip"
+  bucket = google_storage_bucket.bucket.name
+  source = "temp/pipeline_compile.zip"
+}
+
+resource "google_cloudfunctions2_function" "pipeline_compile_function" {
+  name = "pipeline_compile"
+  location = "us-west1"
+  description = "Compile pipeline"
 
   build_config {
     runtime = "python310"
@@ -64,7 +71,37 @@ resource "google_cloudfunctions2_function" "function" {
     source {
       storage_source {
         bucket = google_storage_bucket.bucket.name
-        object = google_storage_bucket_object.object.name
+        object = google_storage_bucket_object.pipeline_compile_obj.name
+      }
+    }
+  }
+}
+
+# Create Cloud Function to run pipeline
+data "archive_file" "pipeline_run_zip" {
+  type        = "zip"
+  source_dir  = "pipeline_run"
+  output_path = "temp/pipeline_run.zip"
+}
+
+resource "google_storage_bucket_object" "pipeline_run_obj" {
+  name   = "pipeline_run.zip"
+  bucket = google_storage_bucket.bucket.name
+  source = "temp/pipeline_run.zip"
+}
+
+resource "google_cloudfunctions2_function" "pipeline_run_function" {
+  name = "pipeline_run"
+  location = "us-west1"
+  description = "Run pipeline"
+
+  build_config {
+    runtime = "python310"
+    entry_point = "main"  # Set the entry point 
+    source {
+      storage_source {
+        bucket = google_storage_bucket.bucket.name
+        object = google_storage_bucket_object.pipeline_run_obj.name
       }
     }
   }

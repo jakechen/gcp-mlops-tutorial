@@ -8,7 +8,7 @@ COPY requirements.txt .
 COPY train_container .
 
 # Pip install
-RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt
 
 # Run script
 ENTRYPOINT ["python", "train.py"]

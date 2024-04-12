@@ -1,0 +1,9 @@
+steps:
+# Build train_model image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', './train_model/Dockerfile', 
+         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/test-repo/train_model', '.']
+# Push built images to Artifact Registry
+images: [
+  'us-west1-docker.pkg.dev/${PROJECT_ID}/test-repo/train_model'
+]
