@@ -38,13 +38,13 @@ data "archive_file" "pipeline_zip" {
   output_path = "temp/pipeline_function.zip"
 }
 
-resource "google_storage_bucket_object" "pipeline_function_obj" {
+resource "google_storage_bucket_object" "pipeline_obj" {
   name   = data.archive_file.pipeline_zip.id
   bucket = google_storage_bucket.bucket.name
   source = data.archive_file.pipeline_zip.output_path
 }
 
-resource "google_cloudfunctions2_function" "pipeline_function_function" {
+resource "google_cloudfunctions2_function" "pipeline_function" {
   name = "pipeline_function"
   location = local.location
   description = "Compile and run pipeline"
@@ -55,8 +55,10 @@ resource "google_cloudfunctions2_function" "pipeline_function_function" {
     source {
       storage_source {
         bucket = google_storage_bucket.bucket.name
-        object = google_storage_bucket_object.pipeline_function_obj.name
+        object = google_storage_bucket_object.pipeline_obj.name
       }
     }
   }
+
+  lifecycle {ignore_changes = [service_config]}
 }
