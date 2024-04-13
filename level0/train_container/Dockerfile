@@ -6,5 +6,7 @@ FROM us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest
 # Copy files
 COPY . .
 
+RUN pip3 install google-cloud-storage==2.14.0
+
 # Run script
 ENTRYPOINT ["python", "train.py"]
