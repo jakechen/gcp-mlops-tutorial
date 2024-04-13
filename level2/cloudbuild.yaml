@@ -1,10 +1,25 @@
+# Build using Docker Build
 steps:
-  # Build train_model image
+
+  # Build pipeline compile image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', './train_model/', 
-          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/test-repo/train_model']
+    args: ['build', './kfp_compile_container/', 
+          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
+
+  # # Build modeling training image
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', './train_container/', 
+  #         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
+  # # Build pipeline compile and run image
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', './pipeline_container/', 
+  #         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/pipeline_container']
   
 # Push built images to Artifact Registry
 images: [
-  'us-west1-docker.pkg.dev/${PROJECT_ID}/test-repo/train_model'
+  'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
 ]
+
+# Increase vCPU for builds
+options:
+  machineType: 'E2_HIGHCPU_32'

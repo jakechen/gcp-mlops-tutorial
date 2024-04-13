@@ -40,16 +40,16 @@ resource "google_artifact_registry_repository" "iris_kfp_repo" {
   format = "KFP"
 }
 
-# Create Cloud Run to compile and run pipeline
-resource "google_cloud_run_v2_job" "pipeline_job" {
-  name     = "iris-pipeline"
+# Create Cloud Run to compile pipeline
+resource "google_cloud_run_v2_job" "kfp_compile_job" {
+  name     = "kfp-compile-job"
   location = local.location
 
   template {
     template {
       service_account = google_service_account.account.email
       containers {
-        image = "${local.location}-docker.pkg.dev/${local.project}/${google_artifact_registry_repository.iris_docker_repo.repository_id}/pipeline_container"
+        image = "${local.location}-docker.pkg.dev/${local.project}/${google_artifact_registry_repository.iris_docker_repo.repository_id}/kfp_compile_container"
       }
     }
   }
@@ -66,9 +66,13 @@ resource "google_project_iam_member" "grant_vertex_permissions" {
   role    = "roles/aiplatform.user"
   member  = "serviceAccount:${google_service_account.account.email}"
 }
-
 resource "google_project_iam_member" "grant_storage_permissions" {
   project = local.project
   role    = "roles/storage.admin"
+  member  = "serviceAccount:${google_service_account.account.email}"
+}
+resource "google_project_iam_member" "grant_artifact_permissions" {
+  project = local.project
+  role    = "roles/artifactregistry.admin"
   member  = "serviceAccount:${google_service_account.account.email}"
 }

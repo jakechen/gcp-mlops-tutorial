@@ -32,8 +32,8 @@ print("Pipeline compilation finished")
 
 # Push pipeline to Artifact Registry
 client = RegistryClient(host=f"https://us-west1-kfp.pkg.dev/simple-pipeline-415719/iris-kfp-repo")
-
 templateName, versionName = client.upload_pipeline(
     file_name="iris.yaml",
     tags=["v1", "latest"]
 )
+print("Pipeline pushed to Artifact Registry")
