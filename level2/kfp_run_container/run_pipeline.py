@@ -9,14 +9,14 @@ print(os.environ)
 def main():
     # Run pipeline
     aip.init(
-        project="simple-pipeline-415719",
-        location="us-west1",
-        staging_bucket="gs://simple-pipeline-415719-bucket",
     )
 
     pipeline_job = aip.PipelineJob(
         display_name="iris",
-        template_path="https://us-west1-kfp.pkg.dev/simple-pipeline-415719/iris-kfp-repo/iris/latest"
+        template_path="https://us-west1-kfp.pkg.dev/simple-pipeline-415719/iris-kfp-repo/iris/latest",
+        pipeline_root="gs://simple-pipeline-415719-bucket",
+        project="simple-pipeline-415719",
+        location="us-west1"
     )
 
     pipeline_job.run(

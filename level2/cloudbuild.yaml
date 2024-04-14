@@ -10,16 +10,17 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', './kfp_compile_container/', 
           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
-
-  # # Build pipeline compile and run image
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['build', './pipeline_container/', 
-  #         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/pipeline_container']
+  
+  # Build pipeline run image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', './kfp_run_container/', 
+          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container']
   
 # Push built images to Artifact Registry
 images: [
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container',
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
+  'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container',
 ]
 
 # Increase vCPU for builds

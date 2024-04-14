@@ -55,6 +55,21 @@ resource "google_cloud_run_v2_job" "kfp_compile_job" {
   }
 }
 
+# Create Cloud Run to run pipeline
+resource "google_cloud_run_v2_job" "kfp_run_job" {
+  name     = "kfp-run-job"
+  location = local.location
+
+  template {
+    template {
+      service_account = google_service_account.account.email
+      containers {
+        image = "${local.location}-docker.pkg.dev/${local.project}/${google_artifact_registry_repository.iris_docker_repo.repository_id}/kfp_run_container"
+      }
+    }
+  }
+}
+
 # Create service account
 resource "google_service_account" "account" {
   account_id = "iris-sa"
