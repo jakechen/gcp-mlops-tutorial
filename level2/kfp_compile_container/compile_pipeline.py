@@ -22,7 +22,10 @@ vertex_component = create_custom_training_job_from_component(
 # Define pipeline
 @dsl.pipeline(name='iris')
 def pipeline():
-    vertex_component()
+    vertex_component(
+        project="simple-pipeline-415719", # define project for custom job
+        location="us-west1", # define location for custom job
+    )
 
 # Compile pipeline
 Compiler().compile(
