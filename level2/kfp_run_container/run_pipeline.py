@@ -16,7 +16,8 @@ def main():
         template_path="https://us-west1-kfp.pkg.dev/simple-pipeline-415719/iris-kfp-repo/iris/latest",
         pipeline_root="gs://simple-pipeline-415719-bucket",
         project="simple-pipeline-415719",
-        location="us-west1"
+        location="us-west1",
+        enable_caching=False # Disable cache for demo purposes; creates new artifact for demo
     )
 
     pipeline_job.run(
