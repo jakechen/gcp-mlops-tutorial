@@ -5,6 +5,11 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', './train_container/', 
           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
+
+  # Build vertex training image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', './vertex_train_container/', 
+          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/vertex_train_container']
   
   # Build pipeline compile image
   - name: 'gcr.io/cloud-builders/docker'
@@ -19,6 +24,7 @@ steps:
 # Push built images to Artifact Registry
 images: [
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container',
+  'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/vertex_train_container',
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container',
 ]

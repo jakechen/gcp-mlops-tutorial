@@ -20,7 +20,7 @@ provider "google" {
 # Create project bucket
 resource "google_storage_bucket" "bucket" {
   name     = "${local.project}-bucket"
-  location = "US"
+  location = "us-west1"
   uniform_bucket_level_access = true
 }
 
