@@ -2,30 +2,21 @@ import os
 from kfp import dsl
 from kfp.compiler import Compiler
 from kfp.registry import RegistryClient
-from google_cloud_pipeline_components.v1.custom_job import create_custom_training_job_from_component
 
 
 print(os.environ)
 
 # Define components
 @dsl.container_component
-def train_component():
+def vertex_train():
     return dsl.ContainerSpec(
-        image='us-west1-docker.pkg.dev/simple-pipeline-415719/iris-docker-repo/train_container'
+        image='us-west1-docker.pkg.dev/simple-pipeline-415719/iris-docker-repo/vertex_train_container'
     )
-
-# Convert container component above into Vertex AI Custom Job component
-vertex_component = create_custom_training_job_from_component(
-    train_component
-)
 
 # Define pipeline
 @dsl.pipeline(name='iris')
 def pipeline():
-    vertex_component(
-        project="simple-pipeline-415719", # define project for custom job
-        location="us-west1", # define location for custom job
-    )
+    vertex_train()
 
 # Compile pipeline
 Compiler().compile(
