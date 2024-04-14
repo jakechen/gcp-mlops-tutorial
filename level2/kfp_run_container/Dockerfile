@@ -10,4 +10,4 @@ COPY . .
 RUN pip install -r requirements.txt
 
 # Run script
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["python", "run_pipeline.py"]

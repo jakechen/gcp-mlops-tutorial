@@ -11,7 +11,7 @@ print(os.environ)
 @dsl.container_component
 def train_component():
     return dsl.ContainerSpec(
-        image='us-west1-docker.pkg.dev/simple-pipeline-415719/iris-docker-repo/train_model'
+        image='us-west1-docker.pkg.dev/simple-pipeline-415719/iris-docker-repo/train_container'
     )
 
 # Convert container component above into Vertex AI Custom Job component

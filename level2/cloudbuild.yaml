@@ -1,15 +1,16 @@
 # Build using Docker Build
 steps:
 
+  # # Build modeling training image
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', './train_container/', 
+  #         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
+  
   # Build pipeline compile image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', './kfp_compile_container/', 
           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
 
-  # # Build modeling training image
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: ['build', './train_container/', 
-  #         '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
   # # Build pipeline compile and run image
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', './pipeline_container/', 
@@ -17,6 +18,7 @@ steps:
   
 # Push built images to Artifact Registry
 images: [
+  # 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container',
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
 ]
 
