@@ -52,5 +52,6 @@ In summary:
     * https://cloud.google.com/sdk/gcloud/reference/builds/submit
 
 ### Resources
+* https://google-cloud-pipeline-components.readthedocs.io/en/google-cloud-pipeline-components-2.13.1/api/v1/custom_job.html#v1.custom_job.create_custom_training_job_from_component
 * https://cloud.google.com/docs/terraform/resource-management/managing-infrastructure-as-code
 * OLDER: https://cloud.google.com/architecture/architecture-for-mlops-using-tfx-kubeflow-pipelines-and-cloud-build

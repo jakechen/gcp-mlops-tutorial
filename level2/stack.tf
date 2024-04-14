@@ -76,18 +76,8 @@ resource "google_service_account" "account" {
 }
 
 # The binding to grant necessary roles 
-resource "google_project_iam_member" "grant_vertex_permissions" {
+resource "google_project_iam_member" "grant_editor_permissions" {
   project = local.project
-  role    = "roles/aiplatform.user"
-  member  = "serviceAccount:${google_service_account.account.email}"
-}
-resource "google_project_iam_member" "grant_storage_permissions" {
-  project = local.project
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.account.email}"
-}
-resource "google_project_iam_member" "grant_artifact_permissions" {
-  project = local.project
-  role    = "roles/artifactregistry.admin"
+  role    = "roles/editor"
   member  = "serviceAccount:${google_service_account.account.email}"
 }
