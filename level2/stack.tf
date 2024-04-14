@@ -1,4 +1,4 @@
-# Stack fundamentals
+# Project configurations
 locals {
   project = "simple-pipeline-415719"
   location = "us-west1"
@@ -17,7 +17,7 @@ provider "google" {
   project = local.project
 }
 
-# Create project bucket
+# Create GCS Bucket for project
 resource "google_storage_bucket" "bucket" {
   name     = "${local.project}-bucket"
   location = "us-west1"
@@ -32,7 +32,7 @@ resource "google_artifact_registry_repository" "iris_docker_repo" {
   format = "DOCKER"
 }
 
-# Create Artifact Registry repository for Docker images
+# Create Artifact Registry repository for KFP images
 resource "google_artifact_registry_repository" "iris_kfp_repo" {
   project = local.project
   location = local.location
