@@ -31,6 +31,4 @@ my_job = aip.CustomJob(
     ],
 )
 
-print()
-
 my_job.run()
