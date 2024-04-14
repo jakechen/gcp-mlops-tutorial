@@ -6,5 +6,8 @@ FROM us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest
 # Copy files
 COPY . .
 
+# Get required libraries
+RUN pip install -r requirements.txt
+
 # Run script
 ENTRYPOINT ["python", "train.py"]
