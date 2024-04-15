@@ -1,4 +1,4 @@
-# Levels of MLOps automation
+# MLOps maturity: a gradual tutorial
 Please read [MLOps: Continuous delivery and automation pipelines in machine learning](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning) before beginning this tutorial.
 
 To summarize the MLOps levels:
@@ -45,12 +45,12 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 ### Data Scientist workflow
 1. I iterate on training container locally
 1. I git push the changes to dev branch in repo of choice e.g. Gitlab, Github
-1. Code Build detects that change, then runs the cloudbuild.yaml (*)
-1. cloudbuild.yaml runs unit tests
-1. cloudbuild.yaml runs gcloud builds submit
-1. cloudbuild.yaml runs terraform apply
-1. cloudbuild.yaml runs function tests
-1. Once all code passes is dev, new changes are automatically pushed to Production
+1. Code Build detects that change, then runs the steps in cloudbuild.yaml (*), which may include:
+    1. Running unit tests
+    1. Running Docker build and pushing to Artifact Registry
+    1. Running `terraform apply`
+    1. Running functional tests
+1. Once all code passes is dev, new changes may automatically pushed to Production depending on your DevOps
 1. The above checks and builds take place in Production and your new model is launched
 
 (*) In this tutorial we will not connect Code Build to a repo, instead we will run Code Build manually to mimic the trigger would execute.
