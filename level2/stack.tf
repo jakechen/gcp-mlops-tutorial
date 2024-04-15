@@ -4,6 +4,7 @@ locals {
   location = "us-west1"
 }
 
+# Enable Google resources e.g "google_storage_bucket" below
 terraform {
   required_providers {
     google = {
