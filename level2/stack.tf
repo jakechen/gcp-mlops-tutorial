@@ -40,21 +40,6 @@ resource "google_artifact_registry_repository" "iris_kfp_repo" {
   format = "KFP"
 }
 
-# Create Cloud Run to compile pipeline
-resource "google_cloud_run_v2_job" "kfp_compile_job" {
-  name     = "kfp-compile-job"
-  location = local.location
-
-  template {
-    template {
-      service_account = google_service_account.account.email
-      containers {
-        image = "${local.location}-docker.pkg.dev/${local.project}/${google_artifact_registry_repository.iris_docker_repo.repository_id}/kfp_compile_container"
-      }
-    }
-  }
-}
-
 # Create Cloud Run to run pipeline
 resource "google_cloud_run_v2_job" "kfp_run_job" {
   name     = "kfp-run-job"

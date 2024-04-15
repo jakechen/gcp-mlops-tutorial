@@ -16,11 +16,20 @@ steps:
     args: ['build', './kfp_compile_container/', 
           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
   
+  # Deploy and pipeline compile image, then wait for it to finish
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: [
+      'gcloud', 'run', 'jobs', 'deploy', 'cloudbuild',
+      '--image=us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
+      '--service-account=iris-sa@simple-pipeline-415719.iam.gserviceaccount.com',
+      '--region=us-west1', '--execute-now', '--wait'
+    ]
+  
   # Build pipeline run image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', './kfp_run_container/', 
           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container']
-  
+
 # Push built images to Artifact Registry
 images: [
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container',
@@ -29,6 +38,11 @@ images: [
   'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container',
 ]
 
+# Assign service account
+serviceAccount: 'projects/simple-pipeline-415719/serviceAccounts/iris-sa@simple-pipeline-415719.iam.gserviceaccount.com'
+logsBucket: 'simple-pipeline-415719-bucket'
+
 # Increase vCPU for builds
 options:
   machineType: 'E2_HIGHCPU_32'
+  logging: GCS_ONLY

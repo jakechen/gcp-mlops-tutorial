@@ -14,7 +14,8 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 - Jupyter Notebooks
 
 ### Data Scientist workflow
-1. I iterate on model in training notebook
+1. I load the data in Jupyter Notebook
+1. I iterate on model
 1. I run training notebook to output model
 
 
@@ -43,14 +44,16 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 
 ### Data Scientist workflow
 1. I iterate on training container locally
-1. I git push the changes to dev
-1. Code Build detects that change, then runs the cloudbuild.yaml
+1. I git push the changes to dev branch in repo of choice e.g. Gitlab, Github
+1. Code Build detects that change, then runs the cloudbuild.yaml (*)
 1. cloudbuild.yaml runs unit tests
 1. cloudbuild.yaml runs gcloud builds submit
 1. cloudbuild.yaml runs terraform apply
 1. cloudbuild.yaml runs function tests
 1. Once all code passes is dev, new changes are automatically pushed to Production
 1. The above checks and builds take place in Production and your new model is launched
+
+(*) In this tutorial we will not connect Code Build to a repo, instead we will run Code Build manually to mimic the trigger would execute.
 
 ### Best practices
 * Use .gitignore in same directory as cloudbuild yaml to ignore temp files e.g. terraform
