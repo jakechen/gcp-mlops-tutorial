@@ -3,18 +3,18 @@ steps:
 
   # Build modeling training image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', './train_container/', 
-          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
+    args: ['build', './train_container/',
+           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/train_container']
 
   # Build vertex training image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', './vertex_train_container/', 
-          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/vertex_train_container']
+    args: ['build', './vertex_train_container/',
+           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/vertex_train_container']
   
   # Build pipeline compile image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', './kfp_compile_container/', 
-          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
+    args: ['build', './kfp_compile_container/',
+           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container']
   
   # Deploy and pipeline compile image, then wait for it to finish
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -27,8 +27,8 @@ steps:
   
   # Build pipeline run image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', './kfp_run_container/', 
-          '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container']
+    args: ['build', './kfp_run_container/',
+           '-t', 'us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_run_container']
 
 # Push built images to Artifact Registry
 images: [
