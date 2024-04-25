@@ -45,7 +45,7 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 ### Data Scientist workflow
 1. I iterate on training container locally
 1. I git push the changes to dev branch in repo of choice e.g. Gitlab, Github
-1. Code Build detects that change, then runs the steps in cloudbuild.yaml (*), which may include:
+1. Cloud Build detects that change, then runs the steps in cloudbuild.yaml (*), which may include:
     1. Running unit tests
     1. Running Docker build and pushing to Artifact Registry
     1. Running `terraform apply`
