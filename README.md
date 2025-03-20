@@ -1,4 +1,4 @@
-# MLOps maturity: a gradual tutorial
+# MLOps on GCP Vertex AI: a gradual tutorial
 Please read [MLOps: Continuous delivery and automation pipelines in machine learning](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning) before beginning this tutorial.
 
 To summarize the MLOps levels:
@@ -39,7 +39,7 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 - Unit testing
 - Production environments: Production environments should not be manually touched, only vetted code can deploy
 - Terraform: Infrastructure as Code e.g. create new buckets using code instead of console
-- Code Build: Build service e.g. docker build and push
+- Cloud Build: Build service e.g. docker build and push
 - Git automation: When source code changes, changes are automatically tested and applied
 
 ### Data Scientist workflow
@@ -53,7 +53,7 @@ The goal of MLOps level 2 is to achieve the same velocity and quality of the Dev
 1. Once all code passes is dev, new changes may automatically pushed to Production depending on your DevOps
 1. The above checks and builds take place in Production and your new model is launched
 
-(*) In this tutorial we will not connect Code Build to a repo, instead we will run Code Build manually to mimic the trigger would execute.
+(*) In this tutorial we will not connect Cloud Build to a repo, instead we will run Cloud Build manually to mimic the trigger would execute.
 
 ### Best practices
 * Use .gitignore in same directory as cloudbuild yaml to ignore temp files e.g. terraform
