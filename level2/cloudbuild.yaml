@@ -21,7 +21,7 @@ steps:
     args: [
       'gcloud', 'run', 'jobs', 'deploy', 'cloudbuild',
       '--image=us-west1-docker.pkg.dev/${PROJECT_ID}/iris-docker-repo/kfp_compile_container',
-      '--service-account=iris-sa@simple-pipeline-415719.iam.gserviceaccount.com',
+      '--service-account=iris-sa@${PROJECT_ID}.iam.gserviceaccount.com',
       '--region=us-west1', '--execute-now', '--wait'
     ]
   
@@ -45,8 +45,8 @@ images: [
 ]
 
 # Assign service account
-serviceAccount: 'projects/simple-pipeline-415719/serviceAccounts/iris-sa@simple-pipeline-415719.iam.gserviceaccount.com'
-logsBucket: 'simple-pipeline-415719-bucket'
+serviceAccount: 'projects/${PROJECT_ID}/serviceAccounts/iris-sa@${PROJECT_ID}.iam.gserviceaccount.com'
+logsBucket: '${PROJECT_ID}-bucket'
 
 # Increase vCPU for builds
 options:

@@ -1,6 +1,6 @@
 # Project configurations
 locals {
-  project = YOUR_PROJECT_ID
+  project = YOUR_GCP_PROJECT
   location = "us-west1"
 }
 
