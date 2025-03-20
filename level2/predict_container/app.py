@@ -2,6 +2,7 @@ import pickle
 from google.cloud import storage
 from flask import Flask, request, jsonify
 
+GCP_PROJECT = YOUR_GCP_PROJECT
 
 # Basic Flask app to serve predictions
 app = Flask(__name__)
@@ -31,7 +32,7 @@ def predict():
 if __name__ == '__main__':
     # Download pre-trained Random Forest model from GCS
     storage_client = storage.Client()
-    bucket = storage_client.bucket("simple-pipeline-415719-bucket")
+    bucket = storage_client.bucket(f"{GCP_PROJECT}-bucket")
     blob = bucket.blob('model.pkl')
     blob.download_to_filename('model.pkl')
 

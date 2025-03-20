@@ -4,6 +4,7 @@ from google.cloud import storage
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 
+GCP_PROJECT = YOUR_GCP_PROJECT
 
 # Load the data
 iris = load_iris()
@@ -20,7 +21,7 @@ print("Model saved")
 
 # Push saved model to GCS bucket
 storage_client = storage.Client()
-bucket = storage_client.bucket("simple-pipeline-415719-bucket")
+bucket = storage_client.bucket(f"{GCP_PROJECT}-bucket")
 blob = bucket.blob('model.pkl')
 blob.upload_from_filename('model.pkl')
 print("Model artifact pushed")

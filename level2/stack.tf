@@ -1,6 +1,6 @@
 # Project configurations
 locals {
-  project = "simple-pipeline-415719"
+  project = YOUR_PROJECT_ID
   location = "us-west1"
 }
 
